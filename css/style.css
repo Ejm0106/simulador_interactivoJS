@@ -1,0 +1,13 @@
+
+.sector-container {
+    display: inline-block;
+    margin-right: 20px; 
+}
+.sector-image {
+    display: block; 
+    width: 200px;
+    margin-bottom: 10px; 
+}
+.sector-label {
+    display: block; 
+}

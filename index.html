@@ -1,17 +1,38 @@
 <!DOCTYPE html>
 <html lang="es">
+
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Simulador de Compra de Entradas</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Simulador de Compra de Entradas</title>
+    <link rel="stylesheet" href="css/style.css">
 </head>
 
 <body>
+    <h1>Bienvenido al Estadio Santiago Bernabéu</h1>
 
-<h1>Bienvenido al Estadio Santiago Bernabéu</h1>
-<button onclick="iniciarCompra()">Iniciar Compra</button>
-<script src="./js/main.js"></script>
 
+    <div class="sector-container">
+        <img src="ruta/imagen_general.jpg" alt="Sector General" class="sector-image">
+        <span class="sector-label">General</span>
+    </div>
+    
+    <div class="sector-container">
+        <img src="ruta/imagen_preferencial.jpg" alt="Sector Preferencial" class="sector-image">
+        <span class="sector-label">Preferencial</span>
+    </div>
+    <div class="sector-container">
+        <img src="ruta/imagen_vip.jpg" alt="Sector VIP" class="sector-image">
+        <span class="sector-label">VIP</span>
+    </div>
+    <div class="sector-container">
+        <img src="ruta/imagen_vip_premium.jpg" alt="Sector VIP Premium" class="sector-image">
+        <span class="sector-label">VIP Premium</span>
+    </div>
+
+    <br>
+    <button onclick="iniciarCompra()">Iniciar Compra</button>
+    <script src="./js/main.js"></script>
 </body>
-</html>
 
+</html>
