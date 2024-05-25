@@ -1,38 +1,19 @@
 <!DOCTYPE html>
 <html lang="es">
-
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Simulador de Compra de Entradas</title>
     <link rel="stylesheet" href="css/style.css">
 </head>
-
 <body>
     <h1>Bienvenido al Estadio Santiago Bernabéu</h1>
-
-
-    <div class="sector-container">
-        <img src="./resources/General.jpg" alt="Sector General" class="sector-image">
-        <span class="sector-label">General</span>
-    </div>
-    
-    <div class="sector-container">
-        <img src="./resources/Preferencial.jpg" alt="Sector Preferencial" class="sector-image">
-        <span class="sector-label">Preferencial</span>
-    </div>
-    <div class="sector-container">
-        <img src="./resources/VIP.jpg" alt="Sector VIP" class="sector-image">
-        <span class="sector-label">VIP</span>
-    </div>
-    <div class="sector-container">
-        <img src="./resources/VIP Premiun este-norte.png" alt="Sector VIP Premium" class="sector-image">
-        <span class="sector-label">VIP Premium</span>
-    </div>
-
-    <br>
-    <button onclick="iniciarCompra()">Iniciar Compra</button>
-    <script src="./js/main.js"></script>
+    <div id="sectores"></div>
+    <div id="compra"></div>
+    <h2>Carrito de Compras</h2>
+    <ul id="carrito"></ul>
+    <button id="comprar">Comprar</button>
+    <script src="js/main.js"></script>
+    <script src="js/dom.js"></script>
 </body>
-
 </html>

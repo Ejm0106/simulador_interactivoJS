@@ -1,14 +1,11 @@
-let entradasCompradas = [];
+let entradasCompradas = JSON.parse(localStorage.getItem('entradasCompradas')) || [];
 let sectoresDisponibles = ["general", "preferencial", "vip", "vip premium"];
 let preciosUnitarios = [20, 30, 50, 100];
-let nombresSectores = ["General", "Preferencial", "VIP", "VIP Premium"];
+let capacidadSectores = [100, 100, 50, 50];
 
 function obtenerPrecioUnitario(sector) {
     let indice = sectoresDisponibles.indexOf(sector.toLowerCase());
-    if (indice !== -1) {
-        return preciosUnitarios[indice];
-    }
-    return null;
+    return indice !== -1 ? preciosUnitarios[indice] : null;
 }
 
 function filtrarPorSector(sector) {
@@ -16,50 +13,57 @@ function filtrarPorSector(sector) {
 }
 
 function verificarEntradasDisponibles(sector) {
-    let entradasDisponibles = 0;
-    let indice = sectoresDisponibles.indexOf(sector);
+    let indice = sectoresDisponibles.indexOf(sector.toLowerCase());
     if (indice !== -1) {
         let entradasCompradasEnSector = filtrarPorSector(sector).reduce((total, entrada) => total + entrada.cantidad, 0);
-        entradasDisponibles = entradasCompradasEnSector < preciosUnitarios[indice] ? preciosUnitarios[indice] - entradasCompradasEnSector : 0;
+        return capacidadSectores[indice] - entradasCompradasEnSector;
     }
-    return entradasDisponibles;
+    return 0;
 }
 
-function iniciarCompra() {
-    let cantidad = parseInt(prompt("Ingrese la cantidad de entradas que desea comprar (máximo 4):"));
+function agregarAlCarrito() {
+    const sectorSelect = document.getElementById('sectorSelect');
+    const cantidadInput = document.getElementById('cantidadInput');
+    let cantidad = parseInt(cantidadInput.value);
+    let sector = sectorSelect.value;
+    let precioUnitario = obtenerPrecioUnitario(sector);
 
-    if (!isNaN(cantidad) && cantidad > 0 && cantidad <= 4) {
-        let sector = prompt("Seleccione el sector (General, Preferencial, VIP, VIP Premium):").toLowerCase();
-
-        let precioUnitario = obtenerPrecioUnitario(sector);
-
-        if (precioUnitario !== null) {
-            let entradasDisponibles = verificarEntradasDisponibles(sector);
-            if (entradasDisponibles >= cantidad) {
-                let totalCompra = cantidad * precioUnitario;
-                alert(`¡Compra exitosa! Ha comprado ${cantidad} entradas en el sector ${sector.toUpperCase()}. Total: $${totalCompra}`);
-                let nuevaEntrada = { cantidad: cantidad, sector: sector, precioUnitario: precioUnitario };
-                entradasCompradas.push(nuevaEntrada);
-            } else {
-                alert(`Lo sentimos, el sector ${sector.toUpperCase()} está agotado. Quedan ${entradasDisponibles} entradas disponibles.`);
-            }
+    if (!isNaN(cantidad) && cantidad > 0 && cantidad <= 4 && precioUnitario !== null) {
+        let entradasDisponibles = verificarEntradasDisponibles(sector);
+        if (entradasDisponibles >= cantidad) {
+            let nuevaEntrada = { cantidad, sector, precioUnitario };
+            entradasCompradas = [...entradasCompradas, nuevaEntrada];
+            localStorage.setItem('entradasCompradas', JSON.stringify(entradasCompradas));
+            actualizarCarrito();
         } else {
-            alert("El sector ingresado no es válido. Por favor, seleccione entre General, Preferencial, VIP o VIP Premium.");
+            mostrarMensaje(`Lo sentimos, el sector ${sector.toUpperCase()} está agotado. Quedan ${entradasDisponibles} entradas disponibles.`);
         }
-    } else {
-        alert("Por favor, ingrese una cantidad válida de entradas (máximo 4).");
     }
-
-    alert("Gracias por visitar el Santiago Bernabéu. ¡Hala Madrid!");
-    mostrarEntradasCompradas();
 }
 
-function mostrarEntradasCompradas() {
-    console.log("Entradas compradas:");
-    nombresSectores.forEach(sector => {
-        let entradasPorSector = filtrarPorSector(sector.toLowerCase());
-        entradasPorSector.forEach((entrada, index) => {
-            console.log(`Entrada ${index + 1}: Cantidad: ${entrada.cantidad}, Sector: ${entrada.sector}, Precio Unitario: $${entrada.precioUnitario}`);
-        });
+function actualizarCarrito() {
+    const carritoUl = document.getElementById('carrito');
+    carritoUl.innerHTML = '';
+    entradasCompradas.forEach((entrada, index) => {
+        const li = document.createElement('li');
+        li.textContent = `Sector: ${entrada.sector.toUpperCase()}, Cantidad: ${entrada.cantidad}, Precio: ${entrada.precioUnitario * entrada.cantidad} EUR`;
+        carritoUl.appendChild(li);
     });
+}
+
+function mostrarMensaje(mensaje) {
+    const mensajeDiv = document.createElement('div');
+    mensajeDiv.classList.add('mensaje');
+    mensajeDiv.textContent = mensaje;
+    document.body.insertBefore(mensajeDiv, document.getElementById('sectores'));
+    setTimeout(() => {
+        mensajeDiv.remove();
+    }, 3000);
+}
+
+function finalizarCompra() {
+    entradasCompradas = [];
+    localStorage.removeItem('entradasCompradas');
+    actualizarCarrito();
+    mostrarMensaje('Compra finalizada con éxito.');
 }
