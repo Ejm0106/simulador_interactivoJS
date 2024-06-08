@@ -5,7 +5,7 @@ document.addEventListener('DOMContentLoaded', () => {
         { sector: "general", img: "./resources/General.jpg" },
         { sector: "preferencial", img: "./resources/Preferencial.jpg" },
         { sector: "vip", img: "./resources/VIP.jpg" },
-        { sector: "vip premium", img: "./resources/VIP Premiun este-norte.png" }
+        { sector: "vip premium", img: "./resources/VIP-premiun-este-norte.png"},
     ];
 
     const sectoresDiv = document.getElementById('sectores');
@@ -46,4 +46,3 @@ document.addEventListener('DOMContentLoaded', () => {
 
     actualizarCarrito();
 });
-

@@ -1,0 +1,5 @@
+{
+    "sectoresDisponibles": ["general", "preferencial", "vip", "vip premium"],
+    "preciosUnitarios": [20, 30, 50, 100],
+    "capacidadSectores": [100, 100, 50, 50]
+}
